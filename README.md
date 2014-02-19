@@ -1,4 +1,4 @@
 wicket-spirit
 =============
 
-A collection of wicket components for self-contained UI requirements.
+A collection of wicket components to solve commonplace UI requirements.
