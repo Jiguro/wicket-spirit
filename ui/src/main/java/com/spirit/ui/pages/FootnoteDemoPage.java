@@ -6,6 +6,7 @@
  */
 package com.spirit.ui.pages;
 
+import com.spirit.ui.component.footnote.FootnotePanel;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 
@@ -18,6 +19,7 @@ public class FootnoteDemoPage extends WebPage {
     protected void onInitialize() {
         super.onInitialize();
 
+        add(new FootnotePanel("footnotePanel"));
     }
 
 }
