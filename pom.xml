@@ -1,0 +1,11 @@
+<project>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.spirit</groupId>
+    <artifactId>wicket-spirit</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>ui</module>
+    </modules>
+</project>

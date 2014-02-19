@@ -1,6 +1,19 @@
 *.class
 
 # Package Files #
+target/
 *.jar
 *.war
 *.ear
+
+# IntelliJ IDEA project settings #
+.idea/
+*.iml
+
+# IDE plugins #
+rebel.xml
+
+.settings
+.project
+.classpath
+*.log*
