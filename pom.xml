@@ -6,8 +6,8 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>ui</module>
-        <module>component</module>
+        <module>wicket-spirit-ui</module>
+        <module>wicket-spirit-elements</module>
     </modules>
 
     <properties>

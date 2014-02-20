@@ -20,8 +20,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.spirit.wicket</groupId>
-    <artifactId>ui</artifactId>
+    <artifactId>wicket-spirit-ui</artifactId>
     <packaging>war</packaging>
     <version>1.0-SNAPSHOT</version>
     <!-- TODO project name  -->
@@ -51,7 +50,7 @@
         <!--  WICKET DEPENDENCIES -->
         <dependency>
             <groupId>com.spirit.wicket</groupId>
-            <artifactId>component</artifactId>
+            <artifactId>wicket-spirit-elements</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
 
