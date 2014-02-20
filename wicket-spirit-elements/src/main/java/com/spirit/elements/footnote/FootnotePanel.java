@@ -22,11 +22,8 @@ import org.apache.wicket.model.IModel;
  */
 public class FootnotePanel extends GenericPanel<Map<String, String>> {
 
-    private FootnoteModel footnoteModel;
-
-    public FootnotePanel(String id, IModel<? extends Map<String, String>> model) {
-        super(id, (IModel<Map<String, String>>)model);
-        this.footnoteModel = new FootnoteModel();
+    public FootnotePanel(String id, IModel<Map<String, String>> model) {
+        super(id, model);
     }
 
     @Override
@@ -39,30 +36,44 @@ public class FootnotePanel extends GenericPanel<Map<String, String>> {
     protected void onInitialize() {
         super.onInitialize();
 
-        add(new ListView<Map.Entry<String, String>>("footnoteLine", this.footnoteModel) {
+        add(new ListView<Map.Entry<String, String>>("footnoteLine", new FootnoteModel(this.getModel())) {
             @Override
             protected void populateItem(ListItem<Map.Entry<String, String>> item) {
-                Map.Entry<String, String> entry = item.getModelObject();
-                item.add(new Label("footnoteSymbol", entry.getKey()));
-                item.add(new Label("footnoteText", entry.getValue()));
+                Map.Entry<String, String> footnoteEntry = item.getModelObject();
+                item.add(new Label("footnoteSymbol", footnoteEntry.getKey()));
+                item.add(new Label("footnoteText", footnoteEntry.getValue()));
             }
         });
     }
 
-    private class FootnoteModel implements IModel<List<Map.Entry<String, String>>> {
+    private static class FootnoteModel implements IModel<List<Map.Entry<String, String>>> {
+
+        IModel<Map<String, String>> footnoteMapModel;
+        private transient List<Map.Entry<String, String>> footnoteList;
+
+        public FootnoteModel(IModel<Map<String, String>> mapModel) {
+            this.footnoteMapModel = mapModel;
+            this.footnoteList = null;
+        }
 
         @Override
         public List<Map.Entry<String, String>> getObject() {
-            Map<String, String> footnoteMap = FootnotePanel.this.getModelObject();
-            return new ArrayList<Map.Entry<String, String>>(footnoteMap.entrySet());
+            if (this.footnoteList == null) {
+                Map<String, String> footnoteMap = footnoteMapModel.getObject();
+                this.footnoteList = (footnoteMap != null ? new ArrayList<Map.Entry<String, String>>(footnoteMap.entrySet()) : null);
+            }
+            return this.footnoteList;
         }
 
         @Override
         public void setObject(List<Map.Entry<String, String>> entries) {
+            //not being used
         }
 
         @Override
         public void detach() {
+            this.footnoteList = null;
+            this.footnoteMapModel.detach();
         }
     }
 

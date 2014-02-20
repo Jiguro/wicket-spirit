@@ -8,6 +8,8 @@ package com.spirit.ui.pages;
 
 import com.spirit.elements.footnote.FootnotePanel;
 import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.model.Model;
 
@@ -20,11 +22,13 @@ public class FootnoteDemoPage extends WebPage {
     protected void onInitialize() {
         super.onInitialize();
 
-        HashMap<String, String> map = new HashMap<String, String>();
+        Map<String, String> map = new HashMap<String, String>();
         map.put("1", "abc");
         map.put("2", "XYZ");
+        map.put("3", "");
+        map.put("4", null);
 
-        add(new FootnotePanel("footnotePanel", Model.of(map)));
+        add(new FootnotePanel("footnotePanel", Model.ofMap(map)));
     }
 
 }
