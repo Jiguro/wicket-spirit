@@ -6,7 +6,8 @@ import java.util.Map;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.markup.head.IHeaderResponse;
-import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
+import org.apache.wicket.markup.head.JavaScriptReferenceHeaderItem;
+import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
@@ -20,12 +21,12 @@ import org.apache.wicket.request.resource.JavaScriptResourceReference;
  */
 public class FootnotePanel extends GenericPanel<Map<String, String>> {
 
-    private static final JavaScriptResourceReference FOOTNOTE_JS = new JavaScriptResourceReference(FootnotePanel.class,
-            "FootnotePanel.js");
+    private static final JavaScriptResourceReference FOOTNOTE_JS =
+            new JavaScriptResourceReference(FootnotePanel.class, "FootnotePanel.js");
 
-    private boolean reorderFootnotes = true;
+    private boolean renumberFootnotes = true;
 
-    private Component scopeArea;
+    private WebMarkupContainer scopeArea = null;
 
     public FootnotePanel(String id) {
         super(id);
@@ -35,19 +36,19 @@ public class FootnotePanel extends GenericPanel<Map<String, String>> {
         super(id, model);
     }
 
-    public boolean isReorderFootnotes() {
-        return reorderFootnotes;
+    public boolean isRenumberFootnotes() {
+        return renumberFootnotes;
     }
 
-    public void setReorderFootnotes(boolean reorderFootnotes) {
-        this.reorderFootnotes = reorderFootnotes;
+    public void setRenumberFootnotes(boolean renumberFootnotes) {
+        this.renumberFootnotes = renumberFootnotes;
     }
 
     public Component getScopeArea() {
-        return scopeArea;
+       return scopeArea;
     }
 
-    public void setScopeArea(Component scopeArea) {
+    public void setScopeArea(WebMarkupContainer scopeArea) {
         this.scopeArea = scopeArea;
         if (this.scopeArea != null) {
             this.scopeArea.setOutputMarkupId(true);
@@ -58,8 +59,10 @@ public class FootnotePanel extends GenericPanel<Map<String, String>> {
     public void renderHead(IHeaderResponse response) {
         super.renderHead(response);
 
-        if (this.reorderFootnotes) {
-            response.render(OnDomReadyHeaderItem.forScript(FOOTNOTE_JS.toString()));
+        if (this.renumberFootnotes) {
+            response.render(JavaScriptReferenceHeaderItem.forReference(
+                    getApplication().getJavaScriptLibrarySettings().getJQueryReference()));
+            response.render(JavaScriptReferenceHeaderItem.forReference(FOOTNOTE_JS, true));
         }
     }
 

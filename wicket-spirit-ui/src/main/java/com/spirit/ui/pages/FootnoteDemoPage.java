@@ -22,6 +22,7 @@ public class FootnoteDemoPage extends WebPage {
         map.put("2", "XYZ");
         map.put("3", "");
         map.put("4", "Lorem ipsum");
+        map.put("5", "Footnote");
 
         add(new FootnotePanel("footnotePanel", Model.ofMap(map)));
 

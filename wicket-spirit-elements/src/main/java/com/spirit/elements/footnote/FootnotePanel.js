@@ -1,28 +1,39 @@
 /**
  * Created by PHT on 25/02/14.
  */
-(function reorderFootnote(scopeAreaComponentId) {
-    var $scopeArea = scopeAreaComponentId ? $('#' + scopeAreaComponentId) : $(window);
+jQuery( document ).ready(function reorderFootnote($, scopeAreaComponentId) {
+    var $scopeArea = scopeAreaComponentId ? $('#' + scopeAreaComponentId) : $(document);
     var $footnotesInScopeArea = $scopeArea.find('.footnoteWSE');
 
     var uniqueTopLeftFootnotesInScopeArea = {};
     $footnotesInScopeArea.each(function() {
-        var footnoteIndex = $(this).text();
-        var footnoteOffset = $(this).offset();
+        var $this = $(this);
+        var footnoteIndex = $this.text();
+        var footnoteOffset = $this.offset();
 
         var topLeftFootnoteForIndex = uniqueTopLeftFootnotesInScopeArea[footnoteIndex];
-        if (typeof topLeftFootnoteForIndex === 'undefined') {
-            uniqueTopLeftFootnotesInScopeArea[footnoteIndex] = footnoteOffset;
-        } else if (footnoteOffset.top < topLeftFootnoteForIndex.top) {
-            uniqueTopLeftFootnotesInScopeArea[footnoteIndex] = footnoteOffset;
-        } else if (footnoteOffset.top === topLeftFootnoteForIndex.top && footnoteOffset.left < topLeftFootnoteForIndex.left) {
-            uniqueTopLeftFootnotesInScopeArea[footnoteIndex] = footnoteOffset;
-        }
+        var isNewTopLeftFootnote = (typeof topLeftFootnoteForIndex === 'undefined') ||
+            (footnoteOffset.top < topLeftFootnoteForIndex.top) ||
+            (footnoteOffset.top === topLeftFootnoteForIndex.top && footnoteOffset.left < topLeftFootnoteForIndex.left);
+
+        if (isNewTopLeftFootnote) uniqueTopLeftFootnotesInScopeArea[footnoteIndex] = footnoteOffset;
     });
 
-    for (member in uniqueTopLeftFootnotesInScopeArea) {
+    var uniqueFootnotesOrderedByOffset = [];
+    for (var member in uniqueTopLeftFootnotesInScopeArea) {
         if (uniqueTopLeftFootnotesInScopeArea.hasOwnProperty(member)) {
-            console.log(member + ": " + uniqueTopLeftFootnotesInScopeArea[member]);
+            uniqueFootnotesOrderedByOffset.push({'index': member, 'offset': uniqueTopLeftFootnotesInScopeArea[member]});
         }
     }
-} (null));
+    uniqueFootnotesOrderedByOffset.sort(function (a, b) {
+        return a.offset.top !== b.offset.top ? a.offset.top - b.offset.top : a.offset.left - b.offset.top;
+    });
+
+    $footnotePaneLines = $(document).find('.footnotePanelWSE li');
+    var newPanel = $();
+    var arrayLength = uniqueFootnotesOrderedByOffset.length;
+    for (var i = 0; i < arrayLength; i++) {
+
+    }
+
+});
