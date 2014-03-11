@@ -1,9 +1,3 @@
-/*
- * Jumio Inc.
- *
- * Copyright (C) 2010 - 2011
- * All rights reserved.
- */
 package com.spirit.ui.pages;
 
 import com.spirit.elements.footnote.FootnoteLabel;

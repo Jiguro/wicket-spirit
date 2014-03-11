@@ -1,9 +1,3 @@
-/*
- * Jumio Inc.
- *
- * Copyright (C) 2010 - 2011
- * All rights reserved.
- */
 package com.spirit.elements.footnote;
 
 import java.util.ArrayList;
@@ -26,7 +20,8 @@ import org.apache.wicket.request.resource.JavaScriptResourceReference;
  */
 public class FootnotePanel extends GenericPanel<Map<String, String>> {
 
-    private static final JavaScriptResourceReference FOOTNOTE_JS = new JavaScriptResourceReference(FootnotePanel.class, "FootnotePanel.js");
+    private static final JavaScriptResourceReference FOOTNOTE_JS = new JavaScriptResourceReference(FootnotePanel.class,
+            "FootnotePanel.js");
 
     private boolean reorderFootnotes = true;
 
@@ -76,8 +71,10 @@ public class FootnotePanel extends GenericPanel<Map<String, String>> {
             @Override
             protected void populateItem(ListItem<Map.Entry<String, String>> item) {
                 Map.Entry<String, String> footnoteEntry = item.getModelObject();
-                item.add(new Label("footnoteSymbol", new StringResourceModel(footnoteEntry.getKey(), null, footnoteEntry.getKey())));
-                item.add(new Label("footnoteText", new StringResourceModel(footnoteEntry.getValue(), null, footnoteEntry.getValue())));
+                item.add(new Label("footnoteSymbol", new StringResourceModel(footnoteEntry.getKey(), null,
+                        footnoteEntry.getKey())));
+                item.add(new Label("footnoteText", new StringResourceModel(footnoteEntry.getValue(), null,
+                        footnoteEntry.getValue())));
             }
         });
     }
@@ -85,6 +82,7 @@ public class FootnotePanel extends GenericPanel<Map<String, String>> {
     private static class FootnoteModel implements IModel<List<Map.Entry<String, String>>> {
 
         IModel<Map<String, String>> footnoteMapModel;
+
         private transient List<Map.Entry<String, String>> footnoteList;
 
         public FootnoteModel(IModel<Map<String, String>> mapModel) {
@@ -96,7 +94,8 @@ public class FootnotePanel extends GenericPanel<Map<String, String>> {
         public List<Map.Entry<String, String>> getObject() {
             if (this.footnoteList == null) {
                 Map<String, String> footnoteMap = footnoteMapModel.getObject();
-                this.footnoteList = (footnoteMap != null ? new ArrayList<Map.Entry<String, String>>(footnoteMap.entrySet()) : null);
+                this.footnoteList = (footnoteMap != null ? new ArrayList<Map.Entry<String, String>>(
+                        footnoteMap.entrySet()) : null);
             }
             return this.footnoteList;
         }
