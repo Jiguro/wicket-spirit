@@ -1,12 +1,15 @@
 package com.spirit.ui.pages;
 
 import com.spirit.elements.form.behaviour.ConfirmChangesUponSubmitBehavior;
+import java.util.Date;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
 import org.apache.wicket.ajax.form.AjaxFormSubmitBehavior;
 import org.apache.wicket.ajax.markup.html.form.AjaxSubmitLink;
 import org.apache.wicket.markup.html.WebPage;
+import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.*;
+import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.Model;
 
 import java.util.Arrays;
@@ -21,9 +24,15 @@ public class ConfirmBoxDemoPage extends WebPage {
         form.setOutputMarkupId(true);
 
         TextField name = new TextField<String>("name", Model.of("My name"));
-        DropDownChoice age = new DropDownChoice<Integer>("age", Model.of(Integer.valueOf(1)), Arrays.asList(Integer.valueOf(0), Integer.valueOf(1), Integer.valueOf(2)));
+        DropDownChoice age = new DropDownChoice<Integer>("age", Model.of(1), Arrays.asList(0, 1, 2));
         CheckBox male = new CheckBox("male", Model.of(Boolean.TRUE));
         TextField misc = new TextField<String>("misc", Model.of("Miscellaneous"));
+        Label timesteamp = new Label("timestamp", new AbstractReadOnlyModel<String>() {
+            @Override
+            public String getObject() {
+                return new Date().toString();
+            }
+        });
 
         Button innerSubmit = new Button("innerSubmit");
         innerSubmit.add(new AjaxFormSubmitBehavior(form, "onclick") {
@@ -65,6 +74,7 @@ public class ConfirmBoxDemoPage extends WebPage {
         form.add(male);
         form.add(misc);
         form.add(innerSubmit);
+        form.add(timesteamp);
     }
 
 }
