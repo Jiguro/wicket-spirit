@@ -3,6 +3,7 @@ package com.spirit.ui.pages;
 import com.spirit.elements.form.behaviour.ConfirmChangesUponSubmitBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
+import org.apache.wicket.ajax.form.AjaxFormSubmitBehavior;
 import org.apache.wicket.ajax.markup.html.form.AjaxSubmitLink;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.form.*;
@@ -24,6 +25,21 @@ public class ConfirmBoxDemoPage extends WebPage {
         CheckBox male = new CheckBox("male", Model.of(Boolean.TRUE));
         TextField misc = new TextField<String>("misc", Model.of("Miscellaneous"));
 
+        Button innerSubmit = new Button("innerSubmit");
+        innerSubmit.add(new AjaxFormSubmitBehavior(form, "onclick") {
+            @Override
+            protected void onSubmit(AjaxRequestTarget target) {
+                super.onSubmit(target);
+                target.add(form);
+            }
+
+            @Override
+            protected void updateAjaxAttributes(AjaxRequestAttributes attributes) {
+                super.updateAjaxAttributes(attributes);
+                attributes.setAllowDefault(true);
+            }
+        });
+
         SubmitLink outerSubmit = new SubmitLink("outerSubmit", form);
         AjaxSubmitLink ajaxSubmit = new AjaxSubmitLink("ajaxSubmit", form) {
             @Override
@@ -35,7 +51,6 @@ public class ConfirmBoxDemoPage extends WebPage {
             @Override
             protected void updateAjaxAttributes(AjaxRequestAttributes attributes) {
                 super.updateAjaxAttributes(attributes);
-
                 attributes.setAllowDefault(true);
             }
         };
@@ -49,6 +64,7 @@ public class ConfirmBoxDemoPage extends WebPage {
         form.add(age);
         form.add(male);
         form.add(misc);
+        form.add(innerSubmit);
     }
 
 }
