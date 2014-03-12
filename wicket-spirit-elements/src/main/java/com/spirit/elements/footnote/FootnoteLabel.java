@@ -4,9 +4,6 @@ import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.IModel;
 
-/**
- * Created by PHT on 24/02/14.
- */
 public class FootnoteLabel extends Label {
 
     public FootnoteLabel(String id) {

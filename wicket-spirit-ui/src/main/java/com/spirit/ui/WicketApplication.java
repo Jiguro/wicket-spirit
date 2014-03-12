@@ -1,5 +1,6 @@
 package com.spirit.ui;
 
+import com.spirit.ui.pages.ConfirmBoxDemoPage;
 import com.spirit.ui.pages.FootnoteDemoPage;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.protocol.http.WebApplication;
@@ -28,5 +29,6 @@ public class WicketApplication extends WebApplication {
         super.init();
 
         mountPage("demopages/footnote", FootnoteDemoPage.class);
+        mountPage("demopages/confirmbox", ConfirmBoxDemoPage.class);
     }
 }

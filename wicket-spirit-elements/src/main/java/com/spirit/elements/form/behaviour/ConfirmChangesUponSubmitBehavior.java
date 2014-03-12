@@ -61,7 +61,7 @@ public class ConfirmChangesUponSubmitBehavior extends Behavior {
 
         private static final String CONFIRM_BOX_DEFAULT_TEXT = "Please confirm your changes.";
 
-        private static final String CONFIRM_BOX_JS_LOGIC = "if ((function() {var anyChange = false; $('#%s [data-original-value]').each(function () {var formComp = $(this), uiVal = formComp.val(), origVal = formComp.attr('data-original-value'); if (formComp.attr('type') === 'checkbox') {uiVal = formComp.prop('checked').toString()} anyChange = anyChange || uiVal != origVal;}); return anyChange;} ()) && !confirm('%s')) {location.reload(); return false;};";
+        private static final String CONFIRM_BOX_JS_LOGIC = "if ((function() {var anyChange = false; $('#%s [data-original-value]').each(function () {var formComp = $(this), uiVal = formComp.val(), origVal = formComp.attr('data-original-value'); if (formComp.attr('type') === 'checkbox') {uiVal = formComp.prop('checked').toString();} anyChange = anyChange || uiVal != origVal;}); return anyChange;} ()) && !confirm('%s')) {location.reload(); return false;};";
 
         public String getJsLogicAsString() {
             String markupId = ConfirmChangesUponSubmitBehavior.this.submittingForm.getMarkupId();
