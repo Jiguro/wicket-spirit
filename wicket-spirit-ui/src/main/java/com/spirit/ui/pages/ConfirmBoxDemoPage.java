@@ -1,10 +1,9 @@
 package com.spirit.ui.pages;
 
-import com.spirit.elements.form.behaviour.ConfirmChangesUponSubmitBehavior;
+import com.spirit.elements.form.behaviour.ConfirmChangesUponSubmitListener;
 import java.util.Date;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
-import org.apache.wicket.ajax.form.AjaxFormSubmitBehavior;
 import org.apache.wicket.ajax.markup.html.form.AjaxSubmitLink;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
@@ -34,22 +33,12 @@ public class ConfirmBoxDemoPage extends WebPage {
             }
         });
 
-        Button innerSubmit = new Button("innerSubmit");
-        innerSubmit.add(new AjaxFormSubmitBehavior(form, "onclick") {
-            @Override
-            protected void onSubmit(AjaxRequestTarget target) {
-                super.onSubmit(target);
-                target.add(form);
-            }
+        final ConfirmChangesUponSubmitListener confirmBoxListener = new ConfirmChangesUponSubmitListener(
+                "userCoreData");
+        confirmBoxListener.activateConfirmationForComponent(name);
+        confirmBoxListener.activateConfirmationForComponent(age);
+        confirmBoxListener.activateConfirmationForComponent(male);
 
-            @Override
-            protected void updateAjaxAttributes(AjaxRequestAttributes attributes) {
-                super.updateAjaxAttributes(attributes);
-                attributes.setAllowDefault(true);
-            }
-        });
-
-        SubmitLink outerSubmit = new SubmitLink("outerSubmit", form);
         AjaxSubmitLink ajaxSubmit = new AjaxSubmitLink("ajaxSubmit", form) {
             @Override
             protected void onSubmit(AjaxRequestTarget target, Form form) {
@@ -60,20 +49,16 @@ public class ConfirmBoxDemoPage extends WebPage {
             @Override
             protected void updateAjaxAttributes(AjaxRequestAttributes attributes) {
                 super.updateAjaxAttributes(attributes);
-                attributes.setAllowDefault(true);
+                attributes.getAjaxCallListeners().add(confirmBoxListener);
             }
         };
 
-        form.add(new ConfirmChangesUponSubmitBehavior(name, age, male));
-
         add(form);
-        add(outerSubmit);
         add(ajaxSubmit);
         form.add(name);
         form.add(age);
         form.add(male);
         form.add(misc);
-        form.add(innerSubmit);
         form.add(timesteamp);
     }
 
