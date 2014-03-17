@@ -9,10 +9,12 @@ import org.apache.wicket.model.AbstractReadOnlyModel;
 /**
  * Ajax call listener to trigger Javascript confirm box whenever values changed within form components that are
  * activated for this functionality. Listener is meant to be assigned to any ajax form submit behavior.
+ * <p/>
+ * Supported form components: "select" single dropdowns, "text" input fields, checkboxes
  */
 public class ConfirmChangesUponSubmitListener extends AjaxCallListener {
 
-    private static final String CONFIRM_BOX_DEFAULT_TEXT = "Please confirm your changes.";
+    private static final String CONFIRM_BOX_DEFAULT_TEXT = "Please confirm your change.";
 
     private static final String CONFIRM_BOX_JS_LOGIC = "if ((function () { var anyChange = false; if (!attrs.f) return anyChange; jQuery('#' + attrs.f + ' [%1$s]').each(function () { var formComp = jQuery(this), uiVal = formComp.val(), origVal = formComp.attr('%1$s'); if (formComp.attr('type') === 'checkbox') uiVal = formComp.prop('checked').toString(); anyChange = anyChange || uiVal != origVal; }); return anyChange; }()) && !confirm('%2$s')) { location.reload(); return false; };";
 
