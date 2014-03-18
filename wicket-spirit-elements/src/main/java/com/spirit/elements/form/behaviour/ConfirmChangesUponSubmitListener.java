@@ -24,9 +24,9 @@ public class ConfirmChangesUponSubmitListener extends AjaxCallListener {
 
     /**
      * If multiple ConfirmChangesUponSubmitListeners should exist distinctly in a single ajax form submit, then ensure
-     * that each listener has a different changeDesignator upon construction.
+     * that each listener is given a different changeDesignator value for its constructor.
      * <p/>
-     * The resource key for the confirm box text will become changeDesignator+".confirmText"
+     * Use changeDesignator+".confirmText" as the resource key to define the text in the confirm box
      */
     public ConfirmChangesUponSubmitListener(final String changeDesignator) {
         this.attributeDesignator = "original-".concat(changeDesignator);
@@ -36,6 +36,8 @@ public class ConfirmChangesUponSubmitListener extends AjaxCallListener {
     @Override
     public CharSequence getPrecondition(Component component) {
         String confirmBoxText = component.getString(this.confirmTextResourceKey, null, CONFIRM_BOX_DEFAULT_TEXT);
+        // attributeDesignator and confirmBoxText are the only Java variables that need to be interpolated into the
+        // javascript string. Variable 'attrs.f' is provided automatically to the script by the Wicket Ajax callback.
         return String.format(CONFIRM_BOX_JS_LOGIC, this.attributeDesignator, confirmBoxText);
     }
 
